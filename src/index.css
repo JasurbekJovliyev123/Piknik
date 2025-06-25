@@ -7,9 +7,15 @@
 
 .container{
   max-width: 1340px;
-  margin-left: 20px;
-  margin-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
   margin: 0 auto;
+}
+.grid1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* 200px minimum, 1fr dinamik kenglik */
+  gap: 1rem;
+  overflow-x-auto;
 }
 @custom-variant dark (&:is(.dark *));
 
