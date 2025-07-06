@@ -58,39 +58,30 @@ const Navbar = () => {
           </DialogTrigger>
 
           {/* Modal Content */}
-          <DialogContent className='absolute top-72 h-[60vh] bg-[#245D30] py-12'>
-            <nav className='flex flex-col md:hidden items-start gap-y-3'>
-              <NavLink 
-                to={'/'} 
-                className="text-white font-medium transition text-[18px]"
-                onClick={() => { document.getElementById('modal-close-btn').click(); }}
-              >
-                Bosh sahifa
-              </NavLink>
-              <NavLink 
-                to={'/products'} 
-                className="text-white font-medium transition text-[18px]"
-                onClick={() => { document.getElementById('modal-close-btn').click(); }}
-              >
-                Mahsulotlar
-              </NavLink>
-              <NavLink 
-                to={'/contact'} 
-                className="text-white font-medium transition text-[18px]"
-                onClick={() => { document.getElementById('modal-close-btn').click(); }} 
-              >
-                Aloqa
-              </NavLink>
-              <NavLink 
-                to={'/blog'} 
-                className="text-white font-medium transition text-[18px]"
-                onClick={() => { document.getElementById('modal-close-btn').click(); }}
-              >
-                Blog
-              </NavLink>
-            </nav>
-
-          </DialogContent>
+           <DialogContent className='absolute top-72 h-[60vh] bg-[#245D30] py-12'>
+  <nav className='flex flex-col md:hidden items-start gap-y-3'>
+    <DialogClose asChild>
+      <NavLink to={'/'} className="text-white font-medium transition text-[18px]">
+        Bosh sahifa
+      </NavLink>
+    </DialogClose>
+    <DialogClose asChild>
+      <NavLink to={'/products'} className="text-white font-medium transition text-[18px]">
+        Mahsulotlar
+      </NavLink>
+    </DialogClose>
+    <DialogClose asChild>
+      <NavLink to={'/contact'} className="text-white font-medium transition text-[18px]">
+        Aloqa
+      </NavLink>
+    </DialogClose>
+    <DialogClose asChild>
+      <NavLink to={'/blog'} className="text-white font-medium transition text-[18px]">
+        Blog
+      </NavLink>
+    </DialogClose>
+  </nav>
+</DialogContent>
         </Dialog>
       </div>
     </header>

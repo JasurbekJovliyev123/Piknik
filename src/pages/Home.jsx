@@ -40,7 +40,7 @@ const Home = () => {
         <HomeProducts/>
     </section>
      <h2 className='lg:text-[52px] text-center md:text-[40px] text-[20px] font-extrabold leading-10 md:leading-11 lg:leading-18 md:my-6'>Tez-tez beriladigan savollar</h2>
-    <div className='max-w-[792px] pt-3 pb-10 flex flex-col justify-center mx-auto'>
+    <div className='container max-w-[792px] pt-3 pb-10 flex flex-col justify-center mx-auto'>
        
       {questions && questions.map((item)=>{
         return <Questions item={item}/>
