@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Mainlayout from './layout/Mainlayout'
-import { Home,About,Contact,Products,Korzinka } from './pages'
+import { Home,About,Contact,Products,Korzinka,Product } from './pages'
 const App = () => {
   const route=createBrowserRouter([
     {
@@ -19,6 +19,10 @@ const App = () => {
         {
           path:'/contact',
           element:<Contact/>
+        },
+        {
+          path:'/product/:id',
+          element:<Product/>
         },
         {
           path:'/blog',

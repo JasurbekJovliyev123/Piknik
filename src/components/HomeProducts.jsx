@@ -5,14 +5,18 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct } from '../features/productsSlice';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
-const Products = () => {
+const HomeProducts = () => {
   const data11 = useSelector((state) => state.products);
   const dispatch = useDispatch();
   const [categ, setCate] = useState(null);
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null); 
+ const getRandomProducts = (products, min = 16, max = 24) => {
+  const shuffled = [...products].sort(() => 0.5 - Math.random());
+  const count = Math.floor(Math.random() * (max - min + 1)) + min;
+  return shuffled.slice(0, count);
+};
+
 
   const { isPending, error, data } = useQuery({
     queryKey: ['repoData'],
@@ -21,23 +25,23 @@ const Products = () => {
         res.json()
       ),
   });
-
+ const [selectedCategoryId, setSelectedCategoryId] = useState(null); 
   useEffect(() => {
     fetch('https://api.piknicuz.com/api/categories')
       .then((res) => res.json())
       .then((datas) => setCate(datas));
   }, []);
 
-  const filteredProducts = selectedCategoryId
+    const filteredProducts = selectedCategoryId
     ? data?.data?.filter((item) => item.category_id === selectedCategoryId)
-    : data?.data;
-  const addProducts=(item)=>{
-      dispatch(addProduct(item))
-      toast.success("Mahsulot savatga qo'shildi!")
-  }
+    : getRandomProducts(data?.data || []);
+   const addProducts=(item)=>{
+        dispatch(addProduct(item))
+        toast.success("Mahsulot savatga qo'shildi!")
+    }
   return (
-    <div className='container min-h-[80vh] py-9'>
-      <h1 className='text-center text-black lg:text-[42px] md:text-[36px] text-[22px] mb-8 font-bold'>Kategoriya va Mahsulotlar</h1>
+    <div className='container min-h-[80vh] pb-8 md:pb-16 py-4'>
+      <h1 className='text-center text-black lg:text-[42px] md:text-[36px] text-[22px] w-full mb-8 font-bold'>Kategoriya va Mahsulotlar</h1>
       <Carousel className='w-full min-w-0'>
         <div className='w-full  ml-auto flex items-center justify-end gap-x-3'>
           {/* <CarouselNext className='p-2 bg-[#245d30] rounded-full text-xl text-white cursor-pointer'> <MdOutlineKeyboardArrowLeft/></CarouselNext> */}
@@ -75,7 +79,7 @@ const Products = () => {
               <p className='m-3 mb-2 text-[20px] font-bold'>{item.title}</p>
               <div className='w-full flex items-center justify-between px-3'>
                 <p className='text-[22px] font-bold'>{item.price} so'm</p>
-                <button type="button" onClick={()=>addProducts(item)} className="chakra-button css-mo10m1 cursor-pointer">
+                <button type="button" onClick={() => addProducts(item)} className="chakra-button css-mo10m1 cursor-pointer">
                   <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">
                     <path d="M8.66663 17.3333L18.1134 16.5461C21.0693 16.2998 21.7328 15.6542 22.0604 12.7063L22.75 6.5" stroke="#141B34" strokeWidth="2" strokeLinecap="round"></path>
                     <path d="M6.5 6.5H7.04167M23.8333 6.5H21.125" stroke="#141B34" strokeWidth="2" strokeLinecap="round"></path>
@@ -95,4 +99,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default HomeProducts;

@@ -3,8 +3,11 @@ import logo from '../assets/logo.svg';
 import { NavLink } from 'react-router-dom';
 import { PiShoppingCartSimpleBold } from "react-icons/pi";
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '../components/ui/dialog';
-
+import { useSelector } from 'react-redux';
 const Navbar = () => {
+  const {products}=useSelector((state)=>state.products)
+  console.log(products);
+  
   return (
     <header className='container py-5 px-3 flex items-center justify-between'>
       <NavLink to={'/'}>
@@ -38,9 +41,12 @@ const Navbar = () => {
       </nav>
 
       <div className='flex items-center gap-x-4'>
-        <NavLink to={'/korzinka'}>
-          <PiShoppingCartSimpleBold className='text-3xl cursor-pointer'/>
-        </NavLink>
+        <div className='relative'>
+            <NavLink to={'/korzinka'}>
+              <PiShoppingCartSimpleBold className='text-3xl cursor-pointer'/>
+            </NavLink>
+            <p className='absolute -top-2 -right-1 px-1 p-[2px] rounded-full font-semibold bg-red-500 text-white text-sm'>{products?.length}</p>
+        </div>
 
         <Dialog>
           <DialogTrigger asChild>
