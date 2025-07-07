@@ -1,7 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 import bgPhoto from '../assets/bgphoto.png'
 import { NavLink } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 const Contact = () => {
+    const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { name, email, phone, message } = formData;
+    if (!name || !email || !phone || !message) {
+      toast.error("Iltimos, barcha maydonlarni to'ldiring!", {
+        position: "top-right",
+      });
+    } else {
+      toast.success("Ma'lumotlar yuborildi!", {
+        position: "top-right",
+      });
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
+      });
+    }
+  };
   return (
     <div className='py-6'>
        <div style={{backgroundImage:`url(${bgPhoto})`}} className='w-full md:pt-36 pt-20 pl-12 md:pl-24 h-[300px] lg:h-[535px] bg-cover'>
@@ -31,14 +68,43 @@ const Contact = () => {
                      <p className='text-sm text-[#1A202C] mb-8 lg:mb-[2px]'>Yakshanba: 10:30-20:00</p>
           </div>
 
-          <form className='border border-[#bdbdbd] max-w-[730px] rounded-3xl p-5 md:p-[50px]'>
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="text" placeholder='Ism va familya' name='name' />
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="email" placeholder='Pochta' name='email' />
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="tel" placeholder='Telefon raqam' name='phone' />
-               <textarea className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] min-h-[120px] mb-7 bg-[#F9F9F9] rounded-2xl' name="message" placeholder='Xabar' id=""></textarea>
+           <form onSubmit={handleSubmit} className='border border-[#bdbdbd] max-w-[730px] rounded-3xl p-5 md:p-[50px]'>
+          <input
+            className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+            type="text"
+            placeholder='Ism va familya'
+            name='name'
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <input
+            className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+            type="email"
+            placeholder='Pochta'
+            name='email'
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <input
+            className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+            type="tel"
+            placeholder='Telefon raqam'
+            name='phone'
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          <textarea
+            className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] min-h-[120px] mb-7 bg-[#F9F9F9] rounded-2xl'
+            name="message"
+            placeholder='Xabar'
+            value={formData.message}
+            onChange={handleChange}
+          ></textarea>
 
-               <button className='w-full text-white font-semibold cursor-pointer bg-[#245D30] h-10 md:h-[50px] rounded-2xl flex items-center justify-center text-sm md:text-[16px]'>Yuborish</button>
-          </form>
+          <button type='submit' className='w-full text-white font-semibold cursor-pointer bg-[#245D30] h-10 md:h-[50px] rounded-2xl flex items-center justify-center text-sm md:text-[16px]'>
+            Yuborish
+          </button>
+        </form>
        </div>
     </div>
   )

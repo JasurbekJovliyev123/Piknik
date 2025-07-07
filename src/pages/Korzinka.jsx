@@ -1,10 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaPlus,FaMinus } from "react-icons/fa6";
 import { decrement, increment,deleteProduct } from '../features/productsSlice';
 import { Dialog, DialogContent, DialogTrigger, DialogClose } from '../components/ui/dialog';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Korzinka = () => {
+  const [formData, setFormData] = useState({
+  name: '',
+  email: '',
+  phone: '',
+  message: '',
+});
+
+const handleChange = (e) => {
+  setFormData({ ...formData, [e.target.name]: e.target.value });
+};
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  const { name, email, phone, message } = formData;
+  if (!name || !email || !phone || !message) {
+    toast.error("Iltimos, barcha maydonlarni to'ldiring!");
+    return;
+  }
+
+  console.log("Yuborilgan ma'lumotlar:", formData);
+  toast.success("Ma'lumotlar muvaffaqiyatli yuborildi ✅");
+  setFormData({ name: '', email: '', phone: '', message: '' });
+};
+
    const state = useSelector((state) => state.products);
   const products = state?.products || [];
   const dispatch = useDispatch();
@@ -57,16 +83,48 @@ const Korzinka = () => {
           </div>
     </div>
     <DialogContent>
-        <form className='max-w-[730px] rounded-3xl p-2 md:p-[50px]'>
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="text" placeholder='Ism va familya' name='name' />
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="email" placeholder='Pochta' name='email' />
-               <input className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7' type="tel" placeholder='Telefon raqam' name='phone' />
-               <textarea className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] min-h-[120px] mb-7 bg-[#F9F9F9] rounded-2xl' name="message" placeholder='Xabar' id=""></textarea>
+          <form onSubmit={handleSubmit} className='max-w-[730px] rounded-3xl p-2 md:p-[50px]'>
+  <input
+    className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+    type="text"
+    placeholder='Ism va familya'
+    name='name'
+    value={formData.name}
+    onChange={handleChange}
+  />
+  <input
+    className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+    type="email"
+    placeholder='Pochta'
+    name='email'
+    value={formData.email}
+    onChange={handleChange}
+  />
+  <input
+    className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] bg-[#F9F9F9] rounded-2xl mb-7'
+    type="tel"
+    placeholder='Telefon raqam'
+    name='phone'
+    value={formData.phone}
+    onChange={handleChange}
+  />
+  <textarea
+    className='w-full px-4 md:px-6 py-2 md:py-3 border border-[#bdbdbd] min-h-[120px] mb-7 bg-[#F9F9F9] rounded-2xl'
+    name="message"
+    placeholder='Xabar'
+    value={formData.message}
+    onChange={handleChange}
+  ></textarea>
 
-               
-                  <button className='w-full text-white font-semibold cursor-pointer bg-[#245D30] h-10 md:h-[50px] rounded-2xl flex items-center justify-center text-sm md:text-[16px]'>Yuborish</button>
-               
-          </form>
+  <button
+    type='submit'
+    className='w-full text-white font-semibold cursor-pointer bg-[#245D30] h-10 md:h-[50px] rounded-2xl flex items-center justify-center text-sm md:text-[16px]'
+  >
+    Yuborish
+  </button>
+</form>
+
+
     </DialogContent>
    </Dialog>
   )

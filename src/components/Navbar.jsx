@@ -7,7 +7,10 @@ import { useSelector } from 'react-redux';
 const Navbar = () => {
   const {products}=useSelector((state)=>state.products)
   console.log(products);
-  
+  let allProduct=0
+  products.map((item)=>{
+    return allProduct=allProduct+item.count
+  })
   return (
     <header className='container py-5 px-3 flex items-center justify-between'>
       <NavLink to={'/'}>
@@ -45,7 +48,7 @@ const Navbar = () => {
             <NavLink to={'/korzinka'}>
               <PiShoppingCartSimpleBold className='text-3xl cursor-pointer'/>
             </NavLink>
-            <p className='absolute -top-2 -right-1 px-1 p-[2px] rounded-full font-semibold bg-red-500 text-white text-sm'>{products?.length}</p>
+            <p className='absolute -top-2 -right-1 px-1 p-[2px] rounded-full font-semibold bg-red-500 text-white text-sm'>{allProduct}</p>
         </div>
 
         <Dialog>
